@@ -30,11 +30,18 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  addTransaction() {
+    print("coucou transaction");
+  }
+
   final List<Transaction> transactions = [
     Transaction(
-      id: 't1', title: "New Shoes", amount: 100, date: DateTime.now()),
+        id: 't1', title: "New Shoes", amount: 100, date: DateTime.now()),
     Transaction(
-      id: 't2', title: "Weekly Groceries", amount: 13.44, date: DateTime.now())
+        id: 't2',
+        title: "Weekly Groceries",
+        amount: 13.44,
+        date: DateTime.now())
   ];
 
   @override
@@ -44,7 +51,7 @@ class MyHomePage extends StatelessWidget {
           title: Text('Flutter App'),
         ),
         body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(
@@ -53,6 +60,28 @@ class MyHomePage extends StatelessWidget {
                   elevation: 5,
                   color: Colors.blue,
                   child: Text("charts"),
+                ),
+              ),
+              Card(
+                elevation: 5,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      TextField(
+                        decoration: InputDecoration(labelText: "Title"),
+                      ),
+                      TextField(
+                        decoration: InputDecoration(labelText: "Amount"),
+                      ),
+                      FlatButton(
+                        onPressed: addTransaction,
+                        textColor: Colors.purple,
+                        child: Text("Add Transaction"),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               ExpenseList(transactions: this.transactions)

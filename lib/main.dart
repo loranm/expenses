@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_expenses/expense-list.dart';
-import './transaction.dart';
+import 'widgets/expenses.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,19 +29,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  addTransaction() {
-    print("coucou transaction");
-  }
-
-  final List<Transaction> transactions = [
-    Transaction(
-        id: 't1', title: "New Shoes", amount: 100, date: DateTime.now()),
-    Transaction(
-        id: 't2',
-        title: "Weekly Groceries",
-        amount: 13.44,
-        date: DateTime.now())
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -50,41 +36,25 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text('Flutter App'),
         ),
-        body: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+        body: SingleChildScrollView(
+                  child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
+            children: [
               Container(
-                // width: double.infinity,
+
                 child: Card(
                   elevation: 5,
                   color: Colors.blue,
                   child: Text("charts"),
-                ),
+                )
               ),
-              Card(
-                elevation: 5,
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(labelText: "Title"),
-                      ),
-                      TextField(
-                        decoration: InputDecoration(labelText: "Amount"),
-                      ),
-                      FlatButton(
-                        onPressed: addTransaction,
-                        textColor: Colors.purple,
-                        child: Text("Add Transaction"),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              ExpenseList(transactions: this.transactions)
-            ]));
+              Expenses(),
+            ],
+          ),
+        )
+        );
   }
 }
+
+
+

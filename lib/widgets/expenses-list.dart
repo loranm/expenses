@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_expenses/transaction.dart';
-
+import 'package:flutter_expenses/models/transaction.dart';
 import 'expense.dart';
 
-class ExpenseList extends StatelessWidget {
+class ExpensesList extends StatelessWidget {
   final List<Transaction> transactions;
-
-  ExpenseList({this.transactions});
+  ExpensesList({this.transactions});
 
   @override
   Widget build(BuildContext context) {
@@ -19,4 +16,3 @@ class ExpenseList extends StatelessWidget {
             .toList());
   }
 }
-

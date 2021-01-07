@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_expenses/transaction.dart';
 import 'package:intl/intl.dart';
+
+import '../models/transaction.dart';
 
 class ExpenseWidget extends StatelessWidget {
   final transaction;
 
   const ExpenseWidget({
     Transaction this.transaction,
-  }) : super();
+  });
 
   @override
   Widget build(BuildContext context) {

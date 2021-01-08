@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_expenses/models/transaction.dart';
-import 'expense.dart';
+
+import '../models/transaction.dart';
+import './expense.dart';
 
 class ExpensesList extends StatelessWidget {
   final List<Transaction> transactions;
@@ -8,11 +9,16 @@ class ExpensesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: transactions
-            .map((transaction) => ExpenseWidget(
-                  transaction: transaction,
-                ))
-            .toList());
+    return Container(
+      height: 300,
+      child: ListView.builder(
+        itemBuilder: itemBuilder,
+        itemCount: transactions.length,
+      ),
+    );
+  }
+
+  Widget itemBuilder(BuildContext context, int index) {
+    return ExpenseWidget(transaction: transactions[index]);
   }
 }

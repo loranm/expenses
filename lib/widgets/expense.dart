@@ -19,11 +19,11 @@ class ExpenseWidget extends StatelessWidget {
             margin: EdgeInsets.all(10),
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.purple, width: 5)),
+                border: Border.all(color: Theme.of(context).primaryColor, width: 5,)),
             child: Text(
-              '\$${transaction.amount}',
+              '\$${transaction.amount.toStringAsFixed(2)}',
               style: TextStyle(
-                  color: Colors.purple,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 20),
             ),
@@ -34,8 +34,7 @@ class ExpenseWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(transaction.title,
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    style:Theme.of(context).textTheme.headline6),
                 Text(
                   DateFormat.yMMMd().format(transaction.date),
                   style: TextStyle(color: Colors.grey),

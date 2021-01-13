@@ -39,9 +39,11 @@ class MyApp extends StatelessWidget {
                       color: Colors.amberAccent))),
           textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
-                  fontFamily: 'BigShoulder',
+                  fontFamily: 'OpenSans',
                   fontWeight: FontWeight.bold,
-                  fontSize: 20))),
+                  fontSize: 20),
+              button:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
       home: MyHomePage(),
     );
   }
@@ -61,9 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  void _addTransaction(String title, double amount) {
+  void _addTransaction(String title, double amount, DateTime transactionDate) {
     final newTransaction = Transaction(
-        id: 'id', title: title, amount: amount, date: DateTime.now());
+        id: 'id', title: title, amount: amount, date: transactionDate);
 
     setState(() => {transactions.add(newTransaction)});
     Navigator.of(context).pop();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ExpenseForm extends StatefulWidget {
   final Function addTransaction;
@@ -10,19 +11,33 @@ class ExpenseForm extends StatefulWidget {
 }
 
 class _ExpenseFormState extends State<ExpenseForm> {
-  final titleController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  DateTime _expenseDate;
 
-  final amountController = TextEditingController();
+  void _onAddTransactionButton() {
+    final title = _titleController.text;
+    final amount = double.parse(_amountController.text);
 
-  void onAddTransactionButton() {
-    final title = titleController.text;
-    final amount = double.parse(amountController.text);
-
-    if (title.isEmpty || amount <= 0) {
+    if (title.isEmpty || amount <= 0 || _expenseDate == null) {
       return;
     }
 
-    return widget.addTransaction(title, amount);
+    return widget.addTransaction(title, amount, _expenseDate);
+  }
+
+  void _presentDatePicker() {
+    print("pick a date");
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2020),
+            lastDate: DateTime.now())
+        .then((date) {
+      setState(()  {
+        _expenseDate = date;
+      });
+    });
   }
 
   @override
@@ -36,18 +51,34 @@ class _ExpenseFormState extends State<ExpenseForm> {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(labelText: "Title"),
-              controller: titleController,
-              onSubmitted: (_) => onAddTransactionButton(),
+              controller: _titleController,
+              onSubmitted: (_) => _onAddTransactionButton(),
             ),
             TextField(
               decoration: InputDecoration(labelText: "Amount"),
-              controller: amountController,
+              controller: _amountController,
               keyboardType: TextInputType.number,
-              onSubmitted: (_) => onAddTransactionButton(),
+              onSubmitted: (_) => _onAddTransactionButton(),
             ),
-            FlatButton(
-              onPressed: onAddTransactionButton,
-              textColor: Colors.purple,
+            Container(
+              child: Row(
+                children: [
+                  Expanded(child: Text(_expenseDate != null ?DateFormat.yMd().format(_expenseDate): "No date chosen")),
+                  FlatButton(
+                      onPressed: _presentDatePicker,
+                      child: Text(
+                        "Pick dated",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor),
+                      ))
+                ],
+              ),
+            ),
+            RaisedButton(
+              onPressed: _onAddTransactionButton,
+              color: Theme.of(context).primaryColor,
+              textColor: Theme.of(context).textTheme.button.color,
               child: Text("Add Transaction"),
             ),
           ],
@@ -55,4 +86,6 @@ class _ExpenseFormState extends State<ExpenseForm> {
       ),
     );
   }
+
+  void onPressed() {}
 }

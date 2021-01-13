@@ -62,10 +62,10 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: BigShoulder
+    - family: OpenSans
       fonts:
-        - asset: assets/fonts/BigShouldersStencilText-Bold.ttf
-        - asset: assets/fonts/BigShouldersStencilText-Regular.ttf
+        - asset: assets/fonts/OpenSans-Regular.ttf
+        - asset: assets/fonts/OpenSans-Bold.ttf
           weight: 700
     - family: QuickSand
       fonts:

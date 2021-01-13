@@ -8,21 +8,24 @@ class ExpensesList extends StatelessWidget {
   final List<Transaction> transactions;
   ExpensesList({this.transactions});
 
+  List<Transaction> get reversedTransactions {
+    return transactions.reversed.toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child:
-      transactions.isEmpty ?
-      NoExpense() :
-      ListView.builder(
-        itemBuilder: itemBuilder,
-        itemCount: transactions.length,
-      ),
+      child: transactions.isEmpty
+          ? NoExpense()
+          : ListView.builder(
+              itemBuilder: itemBuilder,
+              itemCount: transactions.length,
+            ),
     );
   }
 
   Widget itemBuilder(BuildContext context, int index) {
-    return ExpenseWidget(transaction: transactions[index]);
+    return ExpenseWidget(transaction: reversedTransactions[index]);
   }
 }

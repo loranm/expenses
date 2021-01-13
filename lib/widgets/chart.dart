@@ -16,9 +16,8 @@ class Chart extends StatelessWidget {
           totalSum += recentTransactions[i].amount;
         }
       }
-
       return {'day': formatedWeekDay, 'amount': totalSum};
-    });
+    }).reversed.toList();
   }
 
   double get weekSpending {

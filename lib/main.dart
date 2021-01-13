@@ -4,6 +4,7 @@ import 'package:flutter_expenses/widgets/expenses-list.dart';
 import 'data/transactions.dart';
 import 'models/transaction.dart';
 import 'widgets/appbar-actions.dart';
+import 'widgets/chart.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,23 +17,31 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.purple,
-        accentColor: Colors.amber,
-        fontFamily: 'QuickSand',
-        // ignore: deprecated_member_use
-        appBarTheme: AppBarTheme(textTheme: ThemeData.light().textTheme.copyWith(headline6: TextStyle(fontFamily: 'BigShoulder', fontSize: 20, fontWeight: FontWeight.bold,color: Colors.amberAccent))),
-        textTheme: ThemeData.light().textTheme.copyWith(headline6: TextStyle(fontFamily: 'BigShoulder', fontWeight: FontWeight.bold, fontSize: 20))
-
-      ),
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.purple,
+          accentColor: Colors.amber,
+          fontFamily: 'QuickSand',
+          // ignore: deprecated_member_use
+          appBarTheme: AppBarTheme(
+              textTheme: ThemeData.light().textTheme.copyWith(
+                  headline6: TextStyle(
+                      fontFamily: 'BigShoulder',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amberAccent))),
+          textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                  fontFamily: 'BigShoulder',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20))),
       home: MyHomePage(),
     );
   }
@@ -58,7 +67,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() => {transactions.add(newTransaction)});
     Navigator.of(context).pop();
+  }
 
+  List<Transaction> get _recentTransactions {
+    return transactions
+        .where((transaction) => transaction.date
+            .isAfter(DateTime.now().subtract(Duration(days: 7))))
+        .toList();
   }
 
   @override
@@ -66,7 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Personal Expenses"),
-          actions: <Widget>[AppbarActions(openDialog: () => _openNewTransactionSheet(context))],
+          actions: <Widget>[
+            AppbarActions(openDialog: () => _openNewTransactionSheet(context))
+          ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
@@ -77,12 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                  child: Card(
-                elevation: 5,
-                color: Theme.of(context).primaryColor,
-                child: Text("charts"),
-              )),
+              Chart(_recentTransactions),
+              // Container(
+              //     child: Card(
+              //   elevation: 5,
+              //   color: Theme.of(context).primaryColor,
+              //   child: Text("charts"),
+              // )),
               ExpensesList(transactions: transactions),
             ],
           ),

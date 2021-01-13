@@ -9,3 +9,4 @@ final List<Transaction> transactions = [
         amount: 13.44,
         date: DateTime.now())
   ];
+// final List<Transaction> transactions = [];

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './no-expense.dart';
 
 import '../models/transaction.dart';
 import './expense.dart';
@@ -11,7 +12,10 @@ class ExpensesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: ListView.builder(
+      child:
+      transactions.isEmpty ?
+      NoExpense() :
+      ListView.builder(
         itemBuilder: itemBuilder,
         itemCount: transactions.length,
       ),

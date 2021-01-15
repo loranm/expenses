@@ -6,7 +6,8 @@ import './expense.dart';
 
 class ExpensesList extends StatelessWidget {
   final List<Transaction> transactions;
-  ExpensesList({this.transactions});
+  final Function deleteTransaction;
+  ExpensesList({this.transactions, this.deleteTransaction});
 
   List<Transaction> get reversedTransactions {
     return transactions.reversed.toList();
@@ -15,7 +16,7 @@ class ExpensesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 450,
       child: transactions.isEmpty
           ? NoExpense()
           : ListView.builder(
@@ -26,6 +27,6 @@ class ExpensesList extends StatelessWidget {
   }
 
   Widget itemBuilder(BuildContext context, int index) {
-    return ExpenseWidget(transaction: reversedTransactions[index]);
+    return ExpenseWidget(transaction: reversedTransactions[index], deleteTransaction: deleteTransaction);
   }
 }

@@ -65,10 +65,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addTransaction(String title, double amount, DateTime transactionDate) {
     final newTransaction = Transaction(
-        id: 'id', title: title, amount: amount, date: transactionDate);
+        id: DateTime.now().toString(),
+        title: title,
+        amount: amount,
+        date: transactionDate);
 
     setState(() => {transactions.add(newTransaction)});
     Navigator.of(context).pop();
+  }
+
+  void _deleteTransaction(String transactionId) {
+    print(transactionId);
+    setState(() {
+        transactions.removeWhere((transaction) => transaction.id == transactionId);
+    });
   }
 
   List<Transaction> get _recentTransactions {
@@ -97,13 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Chart(_recentTransactions),
-              // Container(
-              //     child: Card(
-              //   elevation: 5,
-              //   color: Theme.of(context).primaryColor,
-              //   child: Text("charts"),
-              // )),
-              ExpensesList(transactions: transactions),
+              ExpensesList(transactions: transactions, deleteTransaction: _deleteTransaction),
             ],
           ),
         ));
